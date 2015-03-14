@@ -1,0 +1,39 @@
+* {
+	font-family: Verdana, Geneva, sans-serif;
+}
+
+.container {
+	display: block;
+	position:relative;
+	margin: 0 auto;
+	max-width: 1200px;
+}
+
+#leftMenu li {
+    list-style-type: none;
+	text-align: left;
+	/*display: inline;
+	padding-right: 20px; */
+}
+
+button {
+	width: 100px;
+}
+
+#chgCatInfo {
+	display: none;
+}
+
+#leftMenu {
+ position:absolute;
+ top:0;
+ left:0;
+ width:20%;
+}
+#catShow {
+ text-align: center;
+ position:absolute;
+ top:0;
+ right:0;
+ width:80%;
+}
