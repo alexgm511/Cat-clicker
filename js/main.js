@@ -1,32 +1,39 @@
 $(function(){
 
     var model = {
-		cats: { 
-			"Gray": {
-				"img": "gray.jpg",
-				"count": 0
-			},
-			"Dusk": {
-				"img": "dusk.jpg",
-				"count": 0
-			},
-			"Red": {
-				"img": "red.jpg",
-				"count": 0
-			},
-			"Misty": {
-				"img": "misty.jpg",
-				"count": 0
-			},
-			"Blondie": {
-				"img": "blondie.jpg",
-				"count": 0
-			},
-			"Chocolate": {
-				"img": "chocolate.jpg",
-				"count": 0
-			}
-		},
+		currCat: null,
+		cats: 	[ 
+				{
+					"name": "Gray", 
+					"img": "gray.jpg",
+					"count": 0
+				},
+				{
+					"name": "Dusk",
+					"img": "dusk.jpg",
+					"count": 0
+				},
+				{
+					"name": "Red",
+					"img": "red.jpg",
+					"count": 0
+				},
+				{
+					"name": "Misty",
+					"img": "misty.jpg",
+					"count": 0
+				},
+				{
+					"name": "Blondie",
+					"img": "blondie.jpg",
+					"count": 0
+				},
+				{
+					"name": "Chocolate",
+					"img": "chocolate.jpg",
+					"count": 0
+				}
+		],
         init: function() {
 			if (!localStorage.currCat) {
 				localStorage.currCat = JSON.stringify([]);
@@ -35,22 +42,34 @@ $(function(){
         },
         addClick: function(name) {
             var cats = JSON.parse(localStorage.cats);
-			cats[name].count++;
+			var moreCat = {};	
+			cats.forEach(function (cat) {
+				if (cat.name == name) {
+					cat.count++;
+					moreCat = cat;
+				}
+			})
             localStorage.cats = JSON.stringify(cats);
-			var cat = cats[name];
-			cat["name"] = name;
-			return cat;
+			return moreCat;
         },
         currCat: function(name) {
 			var cats = JSON.parse(localStorage.cats);
-			var cat = cats[name];
-			cat["name"] = name;
-			localStorage.currCat = JSON.stringify(cat);
-            return cat;
+			var newCat = {};	
+			cats.forEach(function (cat) {
+				if (cat.name == name) {
+					localStorage.currCat = JSON.stringify(cat);
+					newCat = cat;
+				}
+			})
+			return newCat;
         },
 		catNames: function() {
             var cats = JSON.parse(localStorage.cats);
-			return Object.keys(cats);
+			var names = [];
+			cats.forEach(function (cat) {
+				names.push(cat.name);
+			})
+			return names;
 		},
 		chgCatInfo: function(newName, newImg, newCount) {
 			
@@ -63,7 +82,8 @@ $(function(){
 			return model.catNames();
 		},
 		setCurrCat: function(name) {
-			return model.currCat(name);
+			var cat = model.currCat(name);
+			return cat;
 		},
 		upCount: function(name) {
 			var cat = model.addClick(name);
@@ -82,7 +102,6 @@ $(function(){
 
     var view = {
         init: function() {
-			console.log();
             this.catList = $('#catList');
 			this.catShow = $('#cat');
 			var catInfo = $('form#chgCatInfo');
@@ -106,7 +125,6 @@ $(function(){
 			});
 			
 			catInfo.submit(function(e) {
-				console.log('submitted!')
 				octopus.chgInfo(newName.val(), newImg.val(), newCount.val());
 				//e.preventDefault();
 			})
