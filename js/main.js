@@ -40,57 +40,88 @@ $(function(){
 			}
 			localStorage.setItem("cats", JSON.stringify(model.cats));
         },
-        addClick: function(name) {
+		getAllCats: function() {
             var cats = JSON.parse(localStorage.cats);
-			var moreCat = {};	
-			cats.forEach(function (cat) {
-				if (cat.name == name) {
-					cat.count++;
-					moreCat = cat;
-				}
-			})
-            localStorage.cats = JSON.stringify(cats);
-			return moreCat;
-        },
-        currCat: function(name) {
-			var cats = JSON.parse(localStorage.cats);
-			var newCat = {};	
-			cats.forEach(function (cat) {
-				if (cat.name == name) {
-					localStorage.currCat = JSON.stringify(cat);
-					newCat = cat;
-				}
-			})
-			return newCat;
-        },
-		catNames: function() {
-            var cats = JSON.parse(localStorage.cats);
-			var names = [];
-			cats.forEach(function (cat) {
-				names.push(cat.name);
-			})
-			return names;
+			return cats;
 		},
-		chgCatInfo: function(newName, newImg, newCount) {
-			
+		setAllCats: function(cats) {
+			localStorage.cats = JSON.stringify(cats);
+		},
+ 		getCurrCat: function() {
+            var cat = JSON.parse(localStorage.currCat);
+			return cat;
+		},
+		setCurrCat: function(cat) {
+			localStorage.currCat = JSON.stringify(cat);
 		}
     };
 
 
     var octopus = {
 		getCatNames: function() {
-			return model.catNames();
+            var cats = model.getAllCats();
+			var names = [];
+			cats.forEach(function (cat) {
+				names.push(cat.name);
+			})
+			return names;
 		},
 		setCurrCat: function(name) {
 			var cat = model.currCat(name);
 			return cat;
 		},
+		currCat: function(name) {
+			var newCat = {};	
+			if (name) {
+				var cats = model.getAllCats();
+				cats.forEach(function (cat) {
+					if (cat.name == name) {
+						model.setCurrCat(cat);
+						newCat = cat;
+					}
+				})
+			} else {
+				newCat = model.getCurrCat();
+			}
+			return newCat;
+		},
 		upCount: function(name) {
-			var cat = model.addClick(name);
+            var cats = model.getAllCats();
+			cats.forEach(function (cat) {
+				if (cat.name == name) {
+					cat.count++;
+					view.render(cat);
+				}
+			})
+			model.setAllCats(cats);
+		},
+		chgInfo: function(name, newName, newImg, newCount) {
+			model.chgCatInfo(name, newName, newImg, newCount);
+			view.renderBtns();
+		},
+		showCat: function(cat) {
 			view.render(cat);
 		},
-		chgInfo: function() {
-			
+		chgCatInfo: function(newName, newImg, newCount) {
+			var currCat = octopus.currCat();
+			var cats = model.getAllCats();
+			cats.forEach(function (cat) {
+				if (cat.name == currCat.name) {
+					if (newName.length > 0) {
+						cat.name = newName;
+						}
+					if (newImg.length > 0) {
+						cat.img = newImg;
+						}
+					if (newCount > 0) { 
+						cat.count = newCount;
+						}
+					octopus.currCat(cat);
+					view.render(cat);
+				}
+			})
+			model.setAllCats(cats);
+			view.renderBtns();
 		},
 
         init: function() {
@@ -111,7 +142,8 @@ $(function(){
             view.renderBtns();
 			this.catList.on('click', 'button', function(e) {
 				var catName = $(this).attr('data-name');
-				var cat = octopus.setCurrCat(catName);
+				//var cat = octopus.setCurrCat(catName);
+				var cat = octopus.currCat(catName);
 				view.render(cat);
 			});
 
@@ -124,12 +156,17 @@ $(function(){
 				catInfo.show();
 			});
 			
-			catInfo.submit(function(e) {
-				octopus.chgInfo(newName.val(), newImg.val(), newCount.val());
-				//e.preventDefault();
+			$('button#submit, button#cancel').click(function(e) {
+				e.preventDefault();
+				if ($(this).attr('id') == 'submit') {
+					octopus.chgCatInfo(newName.val(), newImg.val(), newCount.val());
+				}
+				catInfo.each(function(){
+					this.reset();
+				});
+				catInfo.hide();
 			})
-			
-			
+						
 			this.catList.find('button:first').click();
 			
 			
