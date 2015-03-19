@@ -165,7 +165,7 @@ $(function(){
 					this.reset();
 				});
 				catInfo.hide();
-			})
+			});
 						
 			this.catList.find('button:first').click();
 			
@@ -179,6 +179,7 @@ $(function(){
             this.catList.html( htmlStr );
         },
         render: function(cat){
+			console.log(this);
 			this.catShow.find('h3.name').html( cat.name );
 			this.catShow.find('img').attr('id', cat.name).attr('src', 'images/'+cat.img).attr('alt', 'Cat called '+cat.name);
 			this.catShow.find('h3.score').html( cat.name+' clicks: '+cat.count );
