@@ -5,33 +5,33 @@ $(function(){
 		cats: 	[ 
 				{
 					"name": "Gray", 
-					"img": "gray.jpg",
-					"count": 0
+					"imgSrc": "gray.png",
+					"clickCount": 0
 				},
 				{
 					"name": "Dusk",
-					"img": "dusk.jpg",
-					"count": 0
+					"imgSrc": "dusk.png",
+					"clickCount": 0
 				},
 				{
 					"name": "Red",
-					"img": "red.jpg",
-					"count": 0
+					"imgSrc": "red.png",
+					"clickCount": 0
 				},
 				{
 					"name": "Misty",
-					"img": "misty.jpg",
-					"count": 0
+					"imgSrc": "misty.png",
+					"clickCount": 0
 				},
 				{
 					"name": "Blondie",
-					"img": "blondie.jpg",
-					"count": 0
+					"imgSrc": "blondie.png",
+					"clickCount": 0
 				},
 				{
 					"name": "Chocolate",
-					"img": "chocolate.jpg",
-					"count": 0
+					"imgSrc": "chocolate.png",
+					"clickCount": 0
 				}
 		],
         init: function() {
@@ -89,7 +89,7 @@ $(function(){
             var cats = model.getAllCats();
 			cats.forEach(function (cat) {
 				if (cat.name == name) {
-					cat.count++;
+					cat.clickCount++;
 					view.render(cat);
 				}
 			})
@@ -111,10 +111,10 @@ $(function(){
 						cat.name = newName;
 						}
 					if (newImg.length > 0) {
-						cat.img = newImg;
+						cat.imgSrc = newImg;
 						}
 					if (newCount > 0) { 
-						cat.count = newCount;
+						cat.clickCount = newCount;
 						}
 					octopus.currCat(cat);
 					view.render(cat);
@@ -135,6 +135,9 @@ $(function(){
         init: function() {
             this.catList = $('#catList');
 			this.catShow = $('#cat');
+			this.catName = $('#cat .name h2');
+			this.catImg = $('#cat img');
+			this.catClicks = $('#cat .score h2');
 			var catInfo = $('form#chgCatInfo');
 			var newName = $('#newName');
 			var newImg = $('#newImg');
@@ -179,10 +182,10 @@ $(function(){
             this.catList.html( htmlStr );
         },
         render: function(cat){
-			console.log(this);
-			this.catShow.find('h3.name').html( cat.name );
-			this.catShow.find('img').attr('id', cat.name).attr('src', 'images/'+cat.img).attr('alt', 'Cat called '+cat.name);
-			this.catShow.find('h3.score').html( cat.name+' clicks: '+cat.count );
+			console.log(cat);
+			this.catName.html( cat.name );
+			this.catImg.attr('id', cat.name).attr('src', 'images/'+cat.imgSrc).attr('alt', 'Cat called '+cat.name);
+			this.catClicks.html( 'Clicks: '+cat.clickCount );
         }
 		
     };

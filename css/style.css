@@ -4,36 +4,139 @@
 
 .container {
 	display: block;
-	position:relative;
+	position: relative;
 	margin: 0 auto;
-	max-width: 1200px;
+	left: calc(50vw - 440px);
+	width: calc(100vw - 440px);
+	height: 100vh;
+}
+
+.title {
+	width:440px;
+	height: 40px;
+	text-align: center;
+	margin-bottom: 5px;
+	background-color: #f4743b;
+	border: 3px solid #666;
+	border-radius: 10px;
+}
+
+.title  h1{
+	letter-spacing: 0.3em;
+	margin: 0;
+	color: #3c6e71;
+}
+
+#main {
+	position: absolute;
+	background-color: #beee62;
+	width:440px;
+	height: 450px;
+	border: 3px solid #666;
+	border-radius: 10px;
+}
+
+#leftMenu {
+	position:absolute;
+	background-color: #70ae6e;
+	top: 5px;
+	left: 5px;
+	padding: 10px;
+	border: 3px solid #666;
+	border-radius: 10px;
+}
+
+#leftMenu h4 {
+	margin: 0;
+}
+
+#leftMenu ul {
+	padding-left: 0;
 }
 
 #leftMenu li {
     list-style-type: none;
-	text-align: left;
-	/*display: inline;
-	padding-right: 20px; */
 }
 
-button {
-	width: 100px;
+#leftMenu button, input {
+	width: 8em;
 }
 
 #chgCatInfo {
+	line-height: 2em;
+	font-size: 0.7em;
 	display: none;
 }
 
-#leftMenu {
- position:absolute;
- top:0;
- left:0;
- width:20%;
+#chgCatInfo  #submit {
+	margin-top: 10px;
 }
+
 #catShow {
- text-align: center;
- position:absolute;
- top:0;
- right:0;
- width:80%;
+	text-align: center;
+	position:absolute;
+	top:5px;
+	right:5px;
+}
+
+#catShow .name {
+	color: #fff;
+	background-color: #3c6e71;
+	border: 3px solid #000;
+	border-radius: 10px;
+	margin-bottom: 3px;
+}
+
+#catShow .score {
+	color: #f4743b;
+	background-color: #fff;
+	border: 3px solid #666;
+	border-radius: 10px;
+}
+
+#catShow .score  h2 {
+	margin: 15px 0 15px 0;
+}
+
+@media only screen and (max-width: 480px) {
+	.container {
+		left: 0;
+		width: 300px;
+	}
+
+	#main {
+		width: 300px;
+		height: 100vh;
+	}
+
+	.title {
+		width:100%;
+	}
+
+	.title  h1{
+		letter-spacing: 0;
+	}
+
+	#leftMenu {
+		width: calc(100% - 40px);
+		top: 435px;
+	}
+
+	#leftMenu  button, input {
+		width: calc(100% - 10px);
+	}
+
+	#catShow {
+		left: 5px;
+	}
+
+	#catShow img {
+		width: calc(100% - 5px);
+	}
+
+	#catShow .name  h2 {
+		margin: 15px 0 15px 0;
+	}
+
+
 }
