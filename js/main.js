@@ -6,32 +6,38 @@ $(function(){
 				{
 					"name": "Gray", 
 					"imgSrc": "gray.png",
-					"clickCount": 0
+					"clickCount": 0,
+					"lastClick": 0
 				},
 				{
 					"name": "Dusk",
 					"imgSrc": "dusk.png",
-					"clickCount": 0
+					"clickCount": 0,
+					"lastClick": 0
 				},
 				{
 					"name": "Red",
 					"imgSrc": "red.png",
-					"clickCount": 0
+					"clickCount": 0,
+					"lastClick": 0
 				},
 				{
 					"name": "Misty",
 					"imgSrc": "misty.png",
-					"clickCount": 0
+					"clickCount": 0,
+					"lastClick": 0
 				},
 				{
 					"name": "Blondie",
 					"imgSrc": "blondie.png",
-					"clickCount": 0
+					"clickCount": 0,
+					"lastClick": 0
 				},
 				{
 					"name": "Chocolate",
 					"imgSrc": "chocolate.png",
-					"clickCount": 0
+					"clickCount": 0,
+					"lastClick": 0
 				}
 		],
         init: function() {
@@ -89,6 +95,11 @@ $(function(){
             var cats = model.getAllCats();
 			cats.forEach(function (cat) {
 				if (cat.name == name) {
+					/*TODO: restrict clicking to once an hour.
+					 * Check time of last click and compare to date()
+					 * If more than an hour, upclick and store time.
+					 * Else put up message with time left.
+					 */
 					cat.clickCount++;
 					view.render(cat);
 				}
@@ -109,13 +120,14 @@ $(function(){
 				if (cat.name == currCat.name) {
 					if (newName.length > 0) {
 						cat.name = newName;
-						}
-					if (newImg.length > 0) {
+					}
+					/* TODO: enable new image loading */
+					/*if (newImg.length > 0) {
 						cat.imgSrc = newImg;
-						}
+					}*/
 					if (newCount > 0) { 
 						cat.clickCount = newCount;
-						}
+					}
 					octopus.currCat(cat);
 					view.render(cat);
 				}

@@ -79,6 +79,12 @@
 	right:5px;
 }
 
+#catShow  img {
+	width: 290px;
+	height:	290px;
+
+}
+
 #catShow .name {
 	color: #fff;
 	background-color: #3c6e71;
